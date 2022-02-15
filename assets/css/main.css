@@ -27,6 +27,14 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
   display: block; }
 
+
+.center-cropped {
+    width: 100px;
+    height: 100px;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
 body {
   line-height: 1; }
 
