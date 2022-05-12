@@ -1,0 +1,457 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+<head>
+    <title>Towards Understanding and Mitigating Unintended Biases in LMRec</title>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport"/>
+    <link href="https://tinabbb.github.io/assets/css/main.css" rel="stylesheet"/>
+</head>
+<body class="is-preload">
+<noscript>
+    <style>
+        .center {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 50%;
+        }
+
+
+
+
+    </style>
+</noscript>
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+
+  window.addEventListener('load', (event) => {
+      document.querySelectorAll("mjx-container").forEach(function(x){
+        x.parentElement.classList += 'has-jax'})
+    });
+
+
+
+
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script async id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <!-- Main -->
+    <div id="main">
+        <div class="inner">
+
+            <!-- Header -->
+            <header id="header">
+                <a class="logo" href="https://tinabbb.github.io/posts/lmrec_unintended_bias/posts.html"><strong>Tianshu (Tina) Shen's</strong>
+                    Posts</a>
+                <ul class="icons">
+                    <li><i aria-hidden="true" class="fa fa-fw fa-map-marker"></i> Toronto, Canada</li>
+                    <li><a class="icon brands fa-github" href="https://github.com/TinaBBB"><span class="label">Github</span></a></li>
+                    <li><a class="icon brands fa-linkedin" href="https://www.linkedin.com/in/tianshu-shen-2021/"><span
+                            class="label">LinkedIn</span></a></li>
+                    <li><a class="icon brands fa-google" href="https://scholar.google.com/citations?view_op=list_works&hl=en&user=EpTgD0YAAAAJ"><span
+                            class="label">Google Scholar</span></a></li>
+                    <li><a class="icon brands fa-youtube" href="https://www.youtube.com/channel/UCDQs3dnYUIoMrU0oa_RhT9w"><span
+                            class="label">Youtube</span></a></li>
+                </ul>
+            </header>
+
+            <!-- Content -->
+            <section>
+                <!--title-->
+                <h2 align="center">Towards Understanding and Mitigating Unintended Biases in Language Model-driven Conversational Recommendation</h2>
+                <p align="center">Conversational Recommendation Systems, BERT, Contextual Language Models, Bias and Discrimination.<br>
+                    <!--<b>WWW2022</b>-->
+                    <b>
+                        [ <a , href="https://arxiv.org/abs/2201.06224" target="_blank">pdf</a> ]
+                        [ <a href="#">code</a> ]
+                    </b>
+
+                </p>
+
+                <d-article>
+                    <div style="text-align: center;">
+                        <img alt="Language Model-driven Conversational Recommendation System (LMRec)" class="center"
+                             src="model_architecture.png" style="width: 35%; displayL block;">
+                        <figcaption>Language Model-driven Conversational Recommendation System (LMRec)</figcaption>
+                    </div>
+
+                    <h2>Abstract</h2>
+                    <p>
+                        Conversational Recommendation Systems (CRSs) have recently started to leverage pretrained language models (LM) such as BERT
+                        for their ability to semantically interpret a wide range of preference statement variations.
+                        However, pretrained LMs are prone to intrinsic biases in their training data,
+                        which may be exacerbated by biases embedded in domain-specific language data (e.g., user reviews) used to fine-tune LMs for
+                        CRSs.
+                        We study a recently introduced LM-driven recommendation backbone (termed LMRec) of
+                        a CRS to investigate how <em>unintended bias</em> --- i.e., due to language variations
+                        such as name references or indirect indicators of sexual orientation or location that
+                        should <em>not</em> affect recommendations --- manifests in significantly shifted price
+                        and category distributions of restaurant recommendations.
+
+                        For example, offhand mention of names associated with the black community significantly
+                        lowers the price distribution of recommended restaurants,
+                        while offhand mentions of common male-associated names lead
+                        to an increase in recommended alcohol-serving establishments.
+                        While these results raise red flags regarding a range of previously
+                        undocumented unintended biases that can occur in LM-driven CRSs,
+                        there is fortunately a silver lining: we show that training side masking
+                        and test side neutralization of non-preferential entities nullifies
+                        the observed biases without significantly impacting recommendation performance.
+
+
+                    </p>
+
+                    <h2>Template-based Analysis</h2>
+                    <p>We define <i>unintended bias</i> in language-based recommendation as</p>
+
+                    <h4 align="center" style="color:#FF5733">A systematic shift in recommendations corresponding to non-preferentially related changes
+                        <br>
+                        in the input (e.g., a mention of a friend's name). </h4>
+
+                    <p>In order to evaluate unintended bias, we make use of a template-based analysis over bias types outlined in Table <a
+                            href="template_examples">1</a> and conduct the bias analysis. </p>
+
+                    <div style="text-align: center;">
+                        <img alt="Template examples" class="center"
+                             src="template_examples.png" style="width: 85%; displayL block;">
+                        <figcaption>
+                            <a id="template_examples">Tabl 1.
+                                Examples of template and substitution for each bias type along with the
+                                top recommended item (restaurant) and its cuisine types and price range.
+                                Here we can observe anecdotally that Madeleine may be recommended desserts,
+                                Keisha a low-cost restaurant, a bar given a mention of a homosexual
+                                relationship, and an expensive restaurant prior to a law office visit.
+                            </a>
+                        </figcaption>
+                    </div>
+
+                    <p>We perform the following bias analysis with the setups listed below:</p>
+
+                    <ul>
+                        <li>Natural conversational template sentences are created for each targeted concept (e.g., race).</li>
+                        <li>Conversational templates are generated at inference time and fed into LMRec.
+                            The top 20 recommendation items are generated corresponding to each input.
+                        </li>
+                        <li>Attributes for the recommended items are recorded, including price levels, categories, and item names and from this we
+                            compute various statistical aggregations such as the bias scoring methods covered next.
+                        </li>
+                    </ul>
+
+                    \item Natural conversational template sentences are created for each targeted concept (e.g., race).
+                    For example, we study the shift of recommendation results by simply changing people's
+                    name mentioned in a conversation template: ``\textbf{Can you make a restaurant reservation for [\underline{Name}]?,}''
+                    where the underlined word indicates the placeholder for a person's name $n \in \{Alice, Jack, etc.,\}$ in the conversation.
+                    The complete list of input templates and the names can be found in Table \ref{tb:input_template}. For different targeted bias
+                    types, corresponding sets of substitute words replace the placeholders and are labelled with their associated bias (e.g.,
+                    ``\textbf{Can you make a restaurant reservation for \textit{Alice}}'' can be labelled with \textit{female} and \textit{white} for
+                    the corresponding analysis). Different sets of example words can be found in Table \ref{table:dataset_examples} and
+                    \ref{tb:dataset_location}.
+                    We take the dataset of female and male (gender), black and white (race) first names used by Sweeney in her Google search bias
+                    study \cite{sweeney2013discrimination}; these names are originally from the studies of \citet{bertrand2004emily}, and Fryer and
+                    Levitt \cite{fryer2004causes}.
+                    \item Conversational templates are generated at inference time and fed into LMRec. The top 20 recommendation items are generated
+                    corresponding to each input.
+                    \item Attributes for the recommended items are recorded, including price levels, categories, and item names and from this we
+                    compute various statistical aggregations such as the bias scoring methods covered next.
+
+                    <p>THe complete list of input test phrases are presented below in Table <a href="complete_input_phrases">2</a></p>
+
+                    <div class="content" style="text-align: center;">
+                        <img alt="List of input test phrases" class="center"
+                             src="input_phrase_list.png" style="width: 85%; displayL block;">
+                        <figcaption>
+                            <a id="complete_input_phrases">Table 2.
+                                Complete list of input test phrase templates for different testing cases.
+                            </a>
+                        </figcaption>
+                    </div>
+
+
+                    <div class="content" style="text-align: center;">
+                        <img alt="List of substitution words" class="center"
+                             src="substitution_words_list.png" style="width: 65%; displayL block;">
+                        <figcaption><a id="table3">Table 3. Complete list of substitution words for Gender, Racial and Sexual Orientation Bias</a>
+                        </figcaption>
+                    </div>
+
+                    <h2>Bias Scoring Methods</h2>
+                    <p>The following section provides the definitions and instantiate different measurement for biases in relation
+                        to recommendation price levels and categories.
+                    </p>
+
+                    <h3>Price Percentage Score</h3>
+                    <p>We measure the percentage at each price level $m \in {\$, \$\$, \$\$\$, \$\$\$\$ }$ being recommended to different bias
+                        sources (e.g., race, gender, etc.). Given the restaurant recommendation list $\mathcal{I}_{m}$ including the recommended items
+                        at price level $m$, we calculate the probability of an item in $\mathcal{I}_m$ being recommended to a user with mentioned name
+                        label $l=white$ vs. $l=black$.<br>
+
+                        $$P(l = l_i|m = m_j) = \frac{\vert \mathcal{I}_{l=l_i, m=m_j} \vert}{\vert \mathcal{I}_{m=m_j} \vert}.$$ <br>
+
+                        A biased model may assign a higher likelihood to <i>black</i> than to <i>white</i> when $m=\$$, such that $p(l=black |m=\$
+                        ) > p(l=white |m=\$)$.
+                        In this case, <i>black</i> and <i>white</i> labels indicate two polarities of the racial bias. While we use the labels $l
+                        \in {black, white}$ for the racial bias analysis, the computation can be applied to other biases as well (e.g, gender bias
+                        where $l \in {male, female}$).
+                    </p>
+
+
+                    <h3>Association Score</h3>
+                    <p>
+                        The <i>Word Embedding Association Test (WEAT)</i> measures bias in word embeddings \cite{caliskan2017semantics. We modify
+                        WEAT to measure the <b><i>Association Score</i></b> of the item information (e.g., restaurant cuisine types) with
+                        different bias types. <br><br>
+
+                        As an example to perform the analysis gender and racial bias, we consider equal-sized sets
+                        $\mathcal{D}_{white},\mathcal{D}_{black} \in \mathcal{D}_{race}$ of racial-identifying names, such that $\mathcal{D}_{white} =
+                        $ {<i>Jack, Anne, Emily, etc.</i>} and $\mathcal{D}_{black}=$ {<i>Jamal, Kareem, Rasheed, etc.</i>}. In addition, we
+                        consider another two sets $\mathcal{D}_{male}, \mathcal{D}_{female} \in \mathcal{D}_{gender}$ of gender-identifying names,
+                        such that $\mathcal{D}_{male} =$ <i>{Jake, Jack, Jim, etc.}</i>, and $\mathcal{D}_{female} =$ <i>{Amy, Claire,
+                        Allison, etc.}</i>.
+
+                        We make use of the item categories (cuisine types) provided in the dataset $c \in \mathcal{C} =$ <i>{ Italian, French,
+                        Asian, etc.}</i>. For each $c$, we retrieve the top recommended items $\mathcal{I}_{c, \mathcal{D}_l}$. The association score
+                        $B(c,l)$ between the target attribute c and the two bias polarities $l, l'$ on the same bias dimension can be computed as an
+                    </p>
+
+                    <div style="text-align: center;">
+                        <img alt="Association Score (Difference)" class="center"
+                             src="associationScore.png" style="width: 25%; displayL block;">
+                        <figcaption>Association Score (Difference)</figcaption>
+                    </div>
+                    <p>
+                        <br>where f(c,$\mathcal{D}_l$) represents the score of relatedness between the attribute c and a bias-dimension labelled as
+                        $l$,
+                        here we use the conditional probability to measure the score: $f(c|l) = \frac{\vert \mathcal{I}_{c, \mathcal{D}_l}
+                        \vert}{\vert \mathcal{I}_{\mathcal{D}_{l}} \vert}$.
+                        For example, the attribute <i>"irish pub"</i> is considered as gender neutral if $B(c=irish pub, l=white) = 0$ and biased
+                        towards <i>white</i> people if it has a relatively large number.
+                    </p>
+
+                    <div style="text-align: center;">
+                        <img alt="Association Score (Ratio)" class="center"
+                             src="associationScoreRatio.png" style="width: 25%; displayL block;">
+                        <figcaption>Association Score (Ratio)</figcaption>
+
+                    </div>
+
+                    <p>
+                        <br>For our analysis, we leverage all the name sets listed out in Table <a href="table3">3</a>. Since the total appearance
+                        frequency of each category in the dataset is unevenly distributed, we approach our experiment with <b><i>Association
+                        Score (Difference)</i></b> to normalize the resulting numbers.
+                    </p>
+
+
+                    <h2>Test-side Neutralization</h2>
+
+                    <h2>Experiments</h2>
+
+                    <h3>Datasets</h3>
+
+                    <div style="text-align: center;">
+                        <img alt="dataset description" class="center"
+                             src="dataset_description.png" style="width: 55%; displayL block;">
+                        <figcaption>Datasets Description</figcaption>
+
+                        <img alt="dataset name statistics" class="center"
+                             src="name_statistics.png" style="width: 55%; displayL block;">
+                        <figcaption>Dataset Name Statistics</figcaption>
+                    </div>
+
+
+                    <h3>Performance of LMRec</h3>
+
+                    <div style="text-align: center;">
+                        <img alt="model performance" class="center"
+                             src="model_performance.png" style="width: 55%; displayL block;">
+                    </div>
+
+                    <h3>Unintended Racial Bias</h3>
+
+                    <div style="text-align: center;">
+                        <img alt="ratio bias" class="center"
+                             src="avg_price_ratio_aggregated.png" style="width: 75%; displayL block;">
+                    </div>
+
+                    <h3>Unintended Gender Bias</h3>
+
+                    <div style="text-align: center;">
+                        <img alt="gender bias" class="center"
+                             src="race_gender_percentagePriceLvl.png" style="width: 65%; displayL block;">
+                    </div>
+
+
+                    <h3>Unintended Intersectional Bias</h3>
+
+                    <div style="text-align: center;">
+                        <img alt="2D association score" class="center"
+                             src="category_associationScore_2D.png" style="width: 85%; displayL block;">
+                    </div>
+
+                    <h3>Nightlife and Sexual Orientation</h3>
+
+                    <div style="text-align: center;">
+                        <img alt="2D nighlife_associationScore" class="center"
+                             src="nighlife_associationScore_2D.png" style="width: 75%; displayL block;">
+                    </div>
+
+                    <h3>Unintended Location Bias</h3>
+
+                    <div class="content" style="text-align: center;">
+                        <img alt="List of substitution words" class="center"
+                             src="nightlife_locations_substitution_list.png" style="width: 55%; displayL block;">
+                    </div>
+
+                    <div style="text-align: center;">
+                        <img alt="2D location_bias_rankedList" class="center"
+                             src="location_ranked_list.png" style="width: 45%; displayL block;">
+                    </div>
+
+                    <h2>Conclusion</h2>
+                    <p>
+
+                        Given the potential that pretrained LMs offer for CRSs, we have presented the first quantitative and qualitative analysis to
+                        identify and measure unintended biases in LMRec. We observed that the model exhibits various unintended biases without
+                        involving any preferential statements nor recorded preferential history of the user, but simply due to an offhand mention of a
+                        name or relationship that in principle should not change the recommendations.
+                        Fortunately, we have shown that training side masking and test side neutralization of non-preferential entities nullifies the
+                        observed biases without significantly impacting recommendation performance.
+                        Overall, our work has aimed to identify and raise a red flag for LM-driven CRSs and we consider this study a first step
+                        towards understanding and mitigating unintended biases in future LM-driven CRSs that have the potential to impact millions of
+                        users.
+
+                    </p>
+
+
+                </d-article>
+
+
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <div class="inner">
+
+            <!-- Search -->
+            <section class="alt" id="search">
+                <form action="#" method="post">
+                    <input id="query" name="query" placeholder="Search" type="text"/>
+                </form>
+            </section>
+
+            <!-- Menu -->
+            <nav id="menu">
+                <header class="major">
+                    <h2>Menu</h2>
+                </header>
+                <ul>
+                    <li><a href="https://tinabbb.github.io/index.html">Homepage</a></li>
+                    <li><a href="https://tinabbb.github.io/publications.html">Publications</a></li>
+                    <li><a href="https://tinabbb.github.io/experience.html">Experience</a></li>
+                    <li><a href="https://tinabbb.github.io/projects.html">Projects</a></li>
+                    <li><a href="https://tinabbb.github.io/posts.html">Posts</a></li>
+                    <li><a href="https://tinabbb.github.io/teaching.html">Teaching</a></li>
+                    <li><a href="https://tinabbb.github.io/activities.html">Activities</a></li>
+                    <li><a href="https://tinabbb.github.io/honors.html">Honors & Awards</a></li>
+                    <li><a href="https://tinabbb.github.io/resume.html">Resume</a></li>
+                </ul>
+            </nav>
+
+            <!-- Section -->
+            <section>
+                <header class="major">
+                    <h2>Video Gallery</h2>
+                </header>
+                <div class="mini-posts">
+                    <article>
+                        <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
+                                frameborder="0" height="190"
+                                src="https://www.youtube.com/embed/9O9a5n1OR90" title="YouTube video player"
+                                width="280"></iframe>
+                        <p>Vector Institute Presentation.</p>
+                    </article>
+                    <article>
+                        <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
+                                frameborder="0"
+                                height="190" src="https://www.youtube.com/embed/s3vbOJC2BMU"
+                                title="Capstone Video"
+                                width="280">
+                        </iframe>
+                        <p>Capstone first-place design project: In-car Conversational Recommender Systems.</p>
+                    </article>
+                    <article>
+                        <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
+                                frameborder="0"
+                                height="190" src="https://www.youtube.com/embed/7tlYlUpTnXg"
+                                title="UNERD Video"
+                                width="280"></iframe>
+                        <p>University of Toronto UNERD Video Competition 2017 Winner - Anticipatory Driving Behaviour.</p>
+                    </article>
+                    <article>
+                        <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
+                                frameborder="0"
+                                height="190" src="https://www.youtube.com/embed/iFOme6z1qFQ"
+                                title="AVMR Project Video"
+                                width="280">
+                        </iframe>
+                        <p>Automotive Vehicle Make Recognition System.</p>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Section -->
+            <section>
+                <header class="major">
+                    <h2>Get in touch</h2>
+                </header>
+                <p>Please feel free to contact me using the information below.</p>
+                <ul class="contact">
+                    <li class="icon solid fa-envelope"><a href="#">tina.shen@mail.utoronto.ca</a></li>
+                    <li class="icon solid fa-home">40 St George St, #8292<br/>
+                        Toronto, ON M5S 2E4
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Footer -->
+            <footer id="footer">
+                <p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a
+                        href="https://html5up.net">HTML5 UP</a>.</p>
+            </footer>
+
+        </div>
+    </div>
+</div>
+
+</div>
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>
