@@ -20,6 +20,15 @@
           margin-right: auto;
           width: 50%;
         }
+
+
+
+
+
+
+
+
+
     </style>
 </noscript>
 <script>
@@ -39,6 +48,15 @@
       document.querySelectorAll("mjx-container").forEach(function(x){
         x.parentElement.classList += 'has-jax'})
     });
+
+
+
+
+
+
+
+
+
 
 </script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -75,7 +93,7 @@
                     <!--<b>WWW2022</b>-->
                     <b>
                         [ <a , href="https://arxiv.org/abs/2201.06224" target="_blank">pdf</a> ]
-                        [ <a href="#">code</a> ]
+                        [ <a href="https://github.com/TinaBBB/Unintended-Bias-LMRec">code</a> ]
                     </b>
 
                 </p>
@@ -91,48 +109,56 @@
                     <p>
                         Conversational Recommendation Systems (CRSs) have recently started to leverage pretrained language models (LM) such as BERT
                         for their ability to semantically interpret a wide range of preference statement variations.
-                        However, pretrained LMs are prone to intrinsic biases in their training data,
-                        which may be exacerbated by biases embedded in domain-specific language data (e.g., user reviews) used to fine-tune LMs for
-                        CRSs.
-                        We study a recently introduced LM-driven recommendation backbone (termed LMRec) of
-                        a CRS to investigate how <em>unintended bias</em> --- i.e., due to language variations
+                        However, <font color="#FF5733">pretrained LMs</font> are prone to <font color="#FF5733">intrinsic biases</font> in their
+                        training data,
+                        which may be exacerbated by biases embedded in <font color="#FF5733">domain-specific language data</font> (e.g., user reviews)
+                        used to fine-tune <font color="#FF5733">LMs for
+                        CRSs</font>.
+
+                        <br>
+                        <br>
+                        We study a recently introduced <font color="#FF5733">LM-driven recommendation backbone (termed LMRec)</font> of
+                        a CRS to investigate how <em><font color="#FF5733">unintended bias</font></em> --- i.e., due to language variations
                         such as name references or indirect indicators of sexual orientation or location that
-                        should <em>not</em> affect recommendations --- manifests in significantly shifted price
-                        and category distributions of restaurant recommendations.
+                        should <em><font color="#FF5733">not</font></em> affect recommendations --- manifests in
+                        <font color="#FF5733">significantly</font> shifted <font color="#FF5733">price</font>
+                        and <font color="#FF5733">category distributions</font> of restaurant recommendations.
 
                         For example, offhand mention of names associated with the black community significantly
-                        lowers the price distribution of recommended restaurants,
+                        <font color="#FF5733">lowers the price distribution</font> of recommended restaurants,
                         while offhand mentions of common male-associated names lead
-                        to an increase in recommended alcohol-serving establishments.
+                        to an <font color="#FF5733">increase in recommended alcohol-serving establishments</font>.
+
+                        <br>
+                        <br>
                         While these results raise red flags regarding a range of previously
-                        undocumented unintended biases that can occur in LM-driven CRSs,
+                        <font color="#FF5733">undocumented unintended biases</font> that can occur in LM-driven CRSs,
                         there is fortunately a silver lining: we show that training side masking
                         and test side neutralization of non-preferential entities nullifies
                         the observed biases without significantly impacting recommendation performance.
 
-
                     </p>
 
                     <h2>Template-based Analysis</h2>
-                    <p>We define <i>unintended bias</i> in language-based recommendation as</p>
+                    <p>We define <i><font color="#FF5733">unintended bias</font></i> in language-based recommendation as</p>
 
-                    <h4 align="center" style="color:#FF5733">A systematic shift in recommendations corresponding to non-preferentially related changes
-                        <br>
-                        in the input (e.g., a mention of a friend's name). </h4>
+                    <h4 align="center" style="color:#FF5733">
+                        <i>A systematic shift in recommendations corresponding to non-preferentially related changes
+                            <br>
+                            in the input (e.g., a mention of a friend's name).
+                        </i>
+                    </h4>
 
                     <p>In order to evaluate unintended bias, we make use of a template-based analysis over bias types outlined in Table <a
                             href="template_examples">1</a> and conduct the bias analysis. </p>
 
                     <div style="text-align: center;">
                         <img alt="Template examples" class="center"
-                             src="template_examples.png" style="width: 85%; displayL block;">
+                             src="template_examples.png" style="width: 95%; displayL block;">
                         <figcaption>
                             <a id="template_examples">Tabl 1.
                                 Examples of template and substitution for each bias type along with the
                                 top recommended item (restaurant) and its cuisine types and price range.
-                                Here we can observe anecdotally that Madeleine may be recommended desserts,
-                                Keisha a low-cost restaurant, a bar given a mention of a homosexual
-                                relationship, and an expensive restaurant prior to a law office visit.
                             </a>
                         </figcaption>
                     </div>
@@ -141,31 +167,15 @@
 
                     <p>We perform the following bias analysis with the setups listed below:</p>
                     <ul>
-                        <li>Natural conversational template sentences are created for each targeted concept (e.g., race).</li>
+                        <li>Natural <font color="#FF5733">conversational template sentences</font> are created for each targeted concept (e.g., race).
+                        </li>
                         <li>Conversational templates are generated at inference time and fed into LMRec.
-                            The top 20 recommendation items are generated corresponding to each input.
+                            The top 20 <font color="#FF5733">recommendation items</font> are generated corresponding to each input.
                         </li>
                         <li>Attributes for the recommended items are recorded, including price levels, categories, and item names and from this we
-                            compute various statistical aggregations such as the bias scoring methods covered next.
+                            compute various <font color="#FF5733">statistical aggregations</font> such as the bias scoring methods covered next.
                         </li>
                     </ul>
-
-                    \item Natural conversational template sentences are created for each targeted concept (e.g., race).
-                    For example, we study the shift of recommendation results by simply changing people's
-                    name mentioned in a conversation template: ``\textbf{Can you make a restaurant reservation for [\underline{Name}]?,}''
-                    where the underlined word indicates the placeholder for a person's name $n \in \{Alice, Jack, etc.,\}$ in the conversation.
-                    The complete list of input templates and the names can be found in Table \ref{tb:input_template}. For different targeted bias
-                    types, corresponding sets of substitute words replace the placeholders and are labelled with their associated bias (e.g.,
-                    ``\textbf{Can you make a restaurant reservation for \textit{Alice}}'' can be labelled with \textit{female} and \textit{white} for
-                    the corresponding analysis). Different sets of example words can be found in Table \ref{table:dataset_examples} and
-                    \ref{tb:dataset_location}.
-                    We take the dataset of female and male (gender), black and white (race) first names used by Sweeney in her Google search bias
-                    study \cite{sweeney2013discrimination}; these names are originally from the studies of \citet{bertrand2004emily}, and Fryer and
-                    Levitt \cite{fryer2004causes}.
-                    \item Conversational templates are generated at inference time and fed into LMRec. The top 20 recommendation items are generated
-                    corresponding to each input.
-                    \item Attributes for the recommended items are recorded, including price levels, categories, and item names and from this we
-                    compute various statistical aggregations such as the bias scoring methods covered next.
 
                     <p>THe complete list of input test phrases are presented below in Table <a href="complete_input_phrases">2</a></p>
 
@@ -187,6 +197,8 @@
                         <figcaption><a id="table3">Table 3. Complete list of substitution words for Gender, Racial and Sexual Orientation Bias</a>
                         </figcaption>
                     </div>
+
+                    <br>
 
                     <h2>Bias Scoring Methods</h2>
                     <p>The following section provides the definitions and instantiate different measurement for biases in relation
@@ -228,9 +240,7 @@
                     </p>
 
                     <div style="text-align: center;">
-                        <img alt="Association Score (Difference)" class="center"
-                             src="associationScore.png" style="width: 25%; displayL block;">
-                        <figcaption>Association Score (Difference)</figcaption>
+                        $$B(c,l) = \frac{f(c, \mathcal{D}_l) - f(c, \mathcal{D}_{l'})}{f(c,\mathcal{D})}.$$
                     </div>
                     <p>
                         <br>where f(c,$\mathcal{D}_l$) represents the score of relatedness between the attribute c and a bias-dimension labelled as
@@ -242,51 +252,112 @@
                     </p>
 
                     <div style="text-align: center;">
-                        <img alt="Association Score (Ratio)" class="center"
-                             src="associationScoreRatio.png" style="width: 25%; displayL block;">
                         <figcaption>Association Score (Ratio)</figcaption>
+                        $$B(c,l) = \frac{f(c, \mathcal{D}_l)}{f(c, \mathcal{D}_{l'})}, \{\mathcal{D}_l, \mathcal{D}_{l'}\} \in \mathcal{D}.$$
 
                     </div>
 
                     <p>
-                        <br>For our analysis, we leverage all the name sets listed out in Table <a href="table3">3</a>. Since the total appearance
-                        frequency of each category in the dataset is unevenly distributed, we approach our experiment with <b><i>Association
-                        Score (Difference)</i></b> to normalize the resulting numbers.
+                        <br>For our analysis, we leverage all the name sets listed out in Table <a href="table3">3</a>.
                     </p>
 
 
-                    <h2>Test-side Neutralization</h2>
+                    <h2>Train-side Masking & Test-side Neutralization</h2>
+                    <p>Since the unintended bias we study and measure occurs via mentions of racial/gender-identifying names, locations, a
+                        nd gendered relationships (for example, sister, bother, girlfriend and boyfriend),
+                        this leads us to a simple and highly effective solution for bias mitigation: test-side
+                        neutralization <a href="https://arxiv.org/abs/1904.03310">Zhao et al.</a>
+                        In our case, we simply leverage BERT's [MASK] token to suppress non-preferential sources of unintended bias altogether.</p>
+                    <p>Hence, we perform test-side neutralization by simply masking out information on sensitive attributes
+                        (i.e., names, locations, and gendered relations) at query time.
+                        While exceptionally simple, we remark that suppression of these non-preferential sources of bias would
+                        <font color="#FF5733">nullify</font>(by definition) any of the <font color="#FF5733">Association Score biases</font>
+                        observed in the following sections since the source of measured bias has been masked out.
+                        We provide <font color="#FF5733">neutralization reference points</font> in all subsequent
+                        analysis to indicate how far the observed <font color="#FF5733">unmitigated biases</font>
+                        deviate from the <font color="#FF5733">neutral case</font>. We also suppress the same sensitive attributes in
+                        the <font color="#FF5733">training data</font> to ensure matching train and test distributions.</p>
+                    <h4>Can combined train side masking &
+                        test side neutralization be done without sacrificing recommendation performance?</h4>
 
-                    <h2>Experiments</h2>
-
-                    <h3>Datasets</h3>
-
-                    <div style="text-align: center;">
-                        <img alt="dataset description" class="center"
-                             src="dataset_description.png" style="width: 55%; displayL block;">
-                        <figcaption>Datasets Description</figcaption>
-
-                        <img alt="dataset name statistics" class="center"
-                             src="name_statistics.png" style="width: 55%; displayL block;">
-                        <figcaption>Dataset Name Statistics</figcaption>
-                    </div>
-
-
-                    <h3>Performance of LMRec</h3>
+                    <p>The results of LMRec performance analysis are shown below (presented with 90% confidence
+                        intervals) for our seven Yelp cities under the <font color="#2946D7">original training method</font>,
+                        with <font color="green">test side neutralization only</font>, and with a <font color="#FF5733">combined train
+                            and test side neutralization</font>.
+                        As expected, the recommendation performance drops when only <font color="green">test-side neutralization</font>
+                        is applied since naively using test-side neutralized queries with the
+                        original training methodology introduces inconsistency between
+                        the train and test data that clearly impacts performance.</p>
 
                     <div style="text-align: center;">
                         <img alt="model performance" class="center"
-                             src="model_performance.png" style="width: 55%; displayL block;">
+                             src="model_performance.png" style="width: 60%; displayL block;">
                     </div>
 
-                    <h3>Unintended Racial Bias</h3>
+                    <!--                    <h3>Datasets</h3>-->
+
+                    <!--                    <div style="text-align: center;">-->
+                    <!--                        <img alt="dataset description" class="center"-->
+                    <!--                             src="dataset_description.png" style="width: 55%; displayL block;">-->
+                    <!--                        <figcaption>Datasets Description</figcaption>-->
+
+                    <!--                        <img alt="dataset name statistics" class="center"-->
+                    <!--                             src="name_statistics.png" style="width: 55%; displayL block;">-->
+                    <!--                        <figcaption>Dataset Name Statistics</figcaption>-->
+                    <!--                    </div>-->
+
+                    <h2>Unintended Racial Bias</h2>
+                    <p>We consider recommendations to be unfair if there is a discrepancy among the
+                        price distribution of recommended items across different protected groups (e.g, defined by race or gender).
+                        We therefore compute the price percentage score for different races and report the results on the seven cities dataset.
+                        In addition to the individual result from each city's dataset,
+                        we report the mean percentage score over all cities with 90% confidence intervals. Results are shown in the Figures below.
+                        The grey line is provided to gauge how far the results deviate from the test-side neutralization reference.</p>
+
+                    <h4>Consistent large gap at the lowest price level.</h4>
+                    <p>We can observe a large gap of the percentage score between conversations when <i>black</i> names are mentioned
+                        and when <i>white</i> names are mentioned.
+                        According to the result aggregated across all the cities, the percentage score for <i>black</i> is 0.695 opposing to 0.305
+                        for the <i>white</i> people.
+                        This reveals an extremely biased tendency towards recommending lower-priced restaurants for <i>black</i> people.
+                        This result can be caused by the long historical and preserved socioeconomic
+                        stereotypes towards black people
+                        (<a href="https://www.brookings.edu/wp-content/uploads/2016/06/reeveskneebonerodrigue_multidimensionalpoverty_fullpaper.pdf">Reeves
+                            et al.</a>,
+                        <a href="https://ajph.aphapublications.org/doi/pdf/10.2105/AJPH.2009.166082">Braveman et al.</a>),
+                        exhibited by the LMRec model.</p>
+
+                    <h4>General upward price trend for <i>white</i> people.</h4>
+                    <p>We also observe a general downward trend for the recommendation results
+                        when labelling $l=$ <i>black</i> against the upward trend
+                        for the case when $l=$ <i>white</i>. This result can be connected with the
+                        findings suggested by
+                        <a href="https://www.sciencedirect.com/science/article/pii/S0749379701004032?casa_token=r1wRWfJ-yAgAAAAA:ILF8vlMlbjLF_fW29fhXP7AK8ai10JWnOqWcpYgatrbs_5RsKINNqf8ElpGkI-VCFTkMfbWqzs8">Morland
+                            et al.</a>,
+                        where the wealth of the neighbourhoods decreases as the proportion of black residents increases.
+                        Such results clearly show racial bias in terms of product price levels. As the price level increases, the percentage score
+                        margin closes up at the \$\$ price level and ends up with
+                        <i>white</i>-labelled conversations having more percentage score than <i>black</i>-labelled conversations at the \$\$\$
+                        and \$\$\$\$ price levels.</p>
+
+                    <h4>Effects in different datasets.</h4>
+                    <p>It can be noticed that certain cities
+                        (e.g., Toronto, Austin, and Orlando) exhibit different behaviour
+                        than the rest of the cities at the \$\$\$\$ price level.
+                        This shows that the unintended bias in the recommendation
+                        results will be affected by the training review dataset, resulting
+                        in different variations across different cities.</p>
+                    <!--                    As shown in Table~\ref{tbl:NameStats}, -->
+                    <!--                        Austin has the highest proportion of black people's names at the \$\$\$\$ price level, -->
+                    <!--                        which corresponds to the higher percentage score for black-labelled conversations.-->
 
                     <div style="text-align: center;">
                         <img alt="ratio bias" class="center"
-                             src="avg_price_ratio_aggregated.png" style="width: 75%; displayL block;">
+                             src="avg_price_ratio_aggregated.png" style="width: 80%; displayL block;">
                     </div>
 
-                    <h3>Unintended Gender Bias</h3>
+
+                    <h2>Unintended Gender Bias</h2>
 
                     <div style="text-align: center;">
                         <img alt="gender bias" class="center"
@@ -332,8 +403,9 @@
                         Overall, our work has aimed to identify and raise a red flag for LM-driven CRSs and we consider this study a first step
                         towards understanding and mitigating unintended biases in future LM-driven CRSs that have the potential to impact millions of
                         users.
-
                     </p>
+
+                    <h2>Resource Section Placeholder</h2>
 
 
                 </d-article>
