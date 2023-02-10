@@ -68,12 +68,6 @@ footer, header, hgroup, menu, nav, section {
     outline:0
 }
 
-.hljs {
-    display: block;
-    background: #1c1d21;
-    color: #c0c5ce;
-}
-
 body {
   line-height: 1; }
 
@@ -258,6 +252,7 @@ pre {
     display: block;
     line-height: 1.75;
     padding: 1em 1.5em;
+    overflow: auto;
     overflow-x: auto; }
 
 hr {
