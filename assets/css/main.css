@@ -34,11 +34,41 @@ footer, header, hgroup, menu, nav, section {
     background-position: center center;
     background-repeat: no-repeat;
   }
+.toc {
+    margin: 0 2px 40px;
+    border: 1px solid var(--border);
+    background: var(--code-bg);
+    border-radius: var(--radius);
+    padding: 0.4em;
+    font-size: 15px;
+}
+
+.hljs {
+    display: block;
+    overflow-x: auto;
+    background: #1c1d21;
+    color: #c0c5ce;
+    padding: 0.5em;
+}
+
+.copy-code {
+    display: none;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    color: rgba(255,255,255,.8);
+    background: rgba(78,78,78,.8);
+    border-radius: var(--radius);
+    padding: 0 5px;
+    font-size: 14px;
+    user-select: none;
+}
 
 body {
   line-height: 1; }
 
 ol, ul {
+  padding: 0;
   list-style: none; }
 
 blockquote, q {
@@ -67,6 +97,18 @@ input, select, textarea {
   -webkit-appearance: none;
   -ms-appearance: none;
   appearance: none; }
+
+pre {
+    display: block;
+    font-family: monospace;
+    white-space: pre;
+    margin: 1em 0px;
+}
+
+code {
+    direction: ltr;
+    font-family: monospace;
+}
 
 /* Basic */
 @-ms-viewport {
