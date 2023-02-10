@@ -110,11 +110,6 @@ input, select, textarea {
   -ms-appearance: none;
   appearance: none; }
 
-code {
-    direction: ltr;
-    font-family: monospace;
-}
-
 /* Basic */
 @-ms-viewport {
   width: device-width; }
